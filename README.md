@@ -1,23 +1,30 @@
 # One-Click API-Key Setup — Prototype
 
-Static mockup pages for the take-home prototype. Companion to `../Setup_Prototype_Spec.md`.
+Static prototype of a `/api-key` one-click setup flow that takes a Claude Code user from "no `ANTHROPIC_API_KEY` found" to a working key written into their project's `.env` — without the AI ever seeing the key.
 
-## View
+**🔗 Live demo:** https://wealthwiselabs.github.io/anthropic-api-key-setup-prototype/
 
-Open `index.html` directly in a browser, or:
-
-```bash
-cd prototype/api-key-setup
-python3 -m http.server 8000
-# then visit http://localhost:8000
-```
+**📄 Design spec:** [`docs/design-spec.md`](docs/design-spec.md) — API contract, security model, tool registry, prototype scope, open questions.
 
 ## Screens
 
-1. `01-claude-code-trigger.html` — Claude Code (terminal) detects no key, prompts user to press ⏎
-2. `02-setup-consent.html` — platform.claude.com/setup consent (first-time user, $5 banner)
-3. `03-setup-success.html` — platform.claude.com/setup success (one-click send to `frontend/.env`)
-4. `04-claude-code-resume.html` — Claude Code resumes, calls /v1/messages, writes lesson file
+| # | URL | Description |
+|---|---|---|
+| 1 | [01-claude-code-trigger.html](https://wealthwiselabs.github.io/anthropic-api-key-setup-prototype/01-claude-code-trigger.html) | Claude Code terminal — detects no key, suggests `/api-key`, user invokes the command, setup details stream in, press ⏎ |
+| 2 | [02-setup-consent.html](https://wealthwiselabs.github.io/anthropic-api-key-setup-prototype/02-setup-consent.html) | `platform.claude.com/setup` consent — first-time user, $5 credits banner, "Claude Code ✓ verified" |
+| 3 | [03-setup-success.html](https://wealthwiselabs.github.io/anthropic-api-key-setup-prototype/03-setup-success.html) | `platform.claude.com/setup` success — one-click "Send key to Claude Code" or download `.env` |
+| 4 | [04-claude-code-resume.html](https://wealthwiselabs.github.io/anthropic-api-key-setup-prototype/04-claude-code-resume.html) | Claude Code resumes — spinner waits for key, status block streams in, tool calls + unified diff complete the original task |
+
+Two extras for navigation: [`/screens.html`](https://wealthwiselabs.github.io/anthropic-api-key-setup-prototype/screens.html) (developer router with thumbnails) and [`/flow.html`](https://wealthwiselabs.github.io/anthropic-api-key-setup-prototype/flow.html) (composite of all 4 frames, used as the figure in the take-home doc).
+
+## Run locally
+
+```bash
+git clone https://github.com/wealthwiselabs/anthropic-api-key-setup-prototype.git
+cd anthropic-api-key-setup-prototype
+python3 -m http.server 8000
+# then visit http://localhost:8000
+```
 
 ## Screenshots
 
@@ -50,4 +57,5 @@ These get embedded in the take-home doc next to the Setup deep-dive section.
 - `styles/stream.js` — character-by-character streaming engine used by the terminal screens
 - `assets/icons/claude-code-mascot.png` — pixel mascot shown in the Claude Code welcome banner
 - `assets/reference/` — source screenshots from the real Anthropic Console
+- `docs/design-spec.md` — full API + UX + security spec for v1 (with v2 notes)
 - `PLAN.md` — original implementation plan (historical; predates the Claude Code rewrite)
