@@ -45,55 +45,42 @@
     <span class="dim">Credits    </span>  $5.00 starter credit available</pre>
       </div>
 
-      <!-- Resumed: Claude continues the original request -->
+      <!-- Resumed: Claude verifies the key with a single live test call -->
       <div class="ai-bullet reveal" data-step="2">
         <span class="bullet">●</span>
-        <div class="ai-text">Key received. Resuming the lesson generator build.</div>
+        <div class="ai-text">Key received. Before building anything, let me make one test call to confirm it works.</div>
       </div>
 
       <div class="tool-call reveal" data-step="3">
-        <span class="name">Bash</span><span class="args">(curl -s https://api.anthropic.com/v1/messages -H "x-api-key: $ANTHROPIC_API_KEY" …)</span>
-        <span class="branch"><span class="label">└─</span> <span class="value">200 OK · 1,742 tokens · 2.3s</span></span>
+        <span class="name">Bash</span><span class="args">(curl -s https://api.anthropic.com/v1/messages -H "x-api-key: $ANTHROPIC_API_KEY" -H "anthropic-version: 2023-06-01" -d '{"model":"claude-sonnet-4-6","max_tokens":16,"messages":[{"role":"user","content":"Reply with OK."}]}')</span>
+        <span class="branch"><span class="label">└─</span> <span class="value">200 OK · 1.1s</span></span>
       </div>
 
-      <div class="tool-call reveal" data-step="4">
-        <span class="name">Write</span><span class="args">(src/lessons/budgeting-101.json)</span>
-        <span class="branch"><span class="label">└─</span> <span class="value">Created · 124 lines</span></span>
-      </div>
-
-      <div class="tool-call reveal" data-step="5">
-        <span class="name">Edit</span><span class="args">(src/journey/path.tsx)</span>
-        <span class="branch"><span class="label">└─</span> <span class="value">Added 2 lines, removed 1 line</span></span>
-      </div>
-
-      <!-- File diff snippet — unified-diff style with red/green tint rows -->
-      <div class="file-block reveal" data-step="6">
-        <div class="file-head">
-          <span class="path">src/journey/path.tsx</span>
-          <span class="lines-added">+2 <span class="removed">−1</span></span>
-        </div>
-        <div class="file-body">
-          <div class="line"><span class="mark"> </span><span class="ln">42</span><span class="code">  const pins = [</span></div>
-          <div class="line removed"><span class="mark">-</span><span class="ln">43</span><span class="code">    { id: 'foundations', title: 'Lay the foundations' },</span></div>
-          <div class="line added"><span class="mark">+</span><span class="ln">43</span><span class="code">    { id: 'foundations', title: 'Lay the foundations', lesson: lessonLoader('budgeting-101') },</span></div>
-          <div class="line added"><span class="mark">+</span><span class="ln">44</span><span class="code">    { id: 'budgeting',   title: 'Build your budget',   lesson: lessonLoader('budgeting-102') },</span></div>
-          <div class="line"><span class="mark"> </span><span class="ln">45</span><span class="code">  ];</span></div>
-        </div>
+      <!-- The API response — concrete proof the key works -->
+      <div class="reveal" data-step="4">
+<pre class="term-block">    {
+      <span class="dim">"id"</span>: <span class="cyan">"msg_01Aq…7Xb"</span>,
+      <span class="dim">"role"</span>: <span class="cyan">"assistant"</span>,
+      <span class="dim">"model"</span>: <span class="cyan">"claude-sonnet-4-6"</span>,
+      <span class="dim">"content"</span>: [{ <span class="dim">"type"</span>: <span class="cyan">"text"</span>, <span class="dim">"text"</span>: <span class="green">"OK"</span> }],
+      <span class="dim">"stop_reason"</span>: <span class="cyan">"end_turn"</span>,
+      <span class="dim">"usage"</span>: { <span class="dim">"input_tokens"</span>: 18, <span class="dim">"output_tokens"</span>: 5 }
+    }</pre>
       </div>
 
       <!-- Final assistant summary -->
-      <div class="ai-bullet reveal" data-step="7">
+      <div class="ai-bullet reveal" data-step="5">
         <span class="bullet">●</span>
-        <div class="ai-text"><strong>Done.</strong> The lesson generator is wired up and the &quot;Lay the foundations&quot; pin now loads <code>budgeting-101.json</code> on click. I made one API call to verify the key works ($0.004 spent of your $5 credit). Want me to seed the other two pins as well?</div>
+        <div class="ai-text"><strong>Key verified.</strong> The test call returned <span class="green">200 OK</span> and Claude replied &ldquo;OK&rdquo; — your key in <code>frontend/.env</code> is live and billing is active ($0.004 spent of your $5 credit). I&apos;m ready to build the lesson generator for the &quot;Lay the foundations&quot; pin. Want me to go ahead?</div>
       </div>
     </div>
 
     <!-- Bottom composer — sibling of .term-body, pinned to the window bottom -->
-    <div class="term-composer reveal" data-step="8">
+    <div class="term-composer reveal" data-step="6">
       <div class="term-composer-box">
         <span class="chev">&gt;</span>
         <span class="cursor"></span>
-        <span class="placeholder">Try &quot;seed budgeting-102 and savings-101&quot;</span>
+        <span class="placeholder">Try &quot;yes, build the lesson generator&quot;</span>
       </div>
       <div class="term-composer-hints">
         <span class="hint">claude-sonnet-4-6 · 124k ctx · $0.004 spent</span>
@@ -117,12 +104,10 @@
       // Each terminal output block streams in like real Claude Code output
       var sequence = [
         { step: 1, cps: 350, pauseAfter: 300 },   // status block
-        { step: 2, cps: 280, pauseAfter: 250 },   // "Key received..."
-        { step: 3, cps: 350, pauseAfter: 280 },   // Bash tool call
-        { step: 4, cps: 350, pauseAfter: 280 },   // Write tool call
-        { step: 5, cps: 350, pauseAfter: 280 },   // Edit tool call
-        { step: 6, cps: 450, pauseAfter: 300 },   // file diff (slightly faster — repetitive code)
-        { step: 7, cps: 260, pauseAfter: 0   }    // final "Done." summary
+        { step: 2, cps: 280, pauseAfter: 250 },   // "Key received... test call"
+        { step: 3, cps: 350, pauseAfter: 350 },   // Bash test call
+        { step: 4, cps: 420, pauseAfter: 320 },   // API response JSON
+        { step: 5, cps: 260, pauseAfter: 0   }    // final "Key verified." summary
       ];
       for (var i = 0; i < sequence.length; i++) {
         var s = sequence[i];
@@ -134,7 +119,7 @@
       }
 
       // Composer fades in normally (UI chrome, not output)
-      fadeIn(8);
+      fadeIn(6);
     })();
   </script>
 </body>

@@ -13,7 +13,7 @@ Static prototype of a `/api-key` one-click setup flow that takes a Claude Code u
 | 1 | [01-claude-code-trigger.html](https://wealthwiselabs.github.io/anthropic-api-key-setup-prototype/01-claude-code-trigger.html) | Claude Code terminal — detects no key, suggests `/api-key`, user invokes the command, setup details stream in, press ⏎ |
 | 2 | [02-setup-consent.html](https://wealthwiselabs.github.io/anthropic-api-key-setup-prototype/02-setup-consent.html) | `platform.claude.com/setup` consent — first-time user, $5 credits banner, "Claude Code ✓ verified" |
 | 3 | [03-setup-success.html](https://wealthwiselabs.github.io/anthropic-api-key-setup-prototype/03-setup-success.html) | `platform.claude.com/setup` success — one-click "Send key to Claude Code" or download `.env` |
-| 4 | [04-claude-code-resume.html](https://wealthwiselabs.github.io/anthropic-api-key-setup-prototype/04-claude-code-resume.html) | Claude Code resumes — spinner waits for key, status block streams in, tool calls + unified diff complete the original task |
+| 4 | [04-claude-code-resume.html](https://wealthwiselabs.github.io/anthropic-api-key-setup-prototype/04-claude-code-resume.html) | Claude Code resumes — spinner waits for key, status block streams in, then Claude makes one test call to `/v1/messages` that returns `200 OK` to verify the key before building |
 
 Two extras for navigation: [`/screens.html`](https://wealthwiselabs.github.io/anthropic-api-key-setup-prototype/screens.html) (developer router with thumbnails) and [`/flow.html`](https://wealthwiselabs.github.io/anthropic-api-key-setup-prototype/flow.html) (composite of all 4 frames, used as the figure in the take-home doc).
 
@@ -35,7 +35,7 @@ After capturing each screen, save into `assets/`:
 - `screen-01.png` — Claude Code initiates setup (1440×900)
 - `screen-02.png` — Setup consent (1200×900)
 - `screen-03.png` — Setup success with one-click send (1200×900)
-- `screen-04.png` — Claude Code resumes, lesson generated (1440×900)
+- `screen-04.png` — Claude Code resumes, verifies the key with a test API call (1440×900)
 
 These get embedded in the take-home doc next to the Setup deep-dive section.
 
